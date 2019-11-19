@@ -31,7 +31,9 @@ usersRouter
             user_name
         )
             .then(hasUserWithUserName => {
+                console.log('hasUserWithUserName ', hasUserWithUserName)
                 if (hasUserWithUserName) {
+                    
                     return res.status(400).json({
                         error: 'Username already taken'
                     });

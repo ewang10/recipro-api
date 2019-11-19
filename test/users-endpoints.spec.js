@@ -1,10 +1,11 @@
 const knex = require('knex');
+const bcrypt = require('bcryptjs');
 const app = require('../src/app');
 const helpers = require('./test-helpers');
 
-describe.only('Users Endpoints', () => {
+describe('Users Endpoints', () => {
     let db;
-    
+
     before('make knex instance', () => {
         db = knex({
             client: 'pg',
@@ -25,16 +26,16 @@ describe.only('Users Endpoints', () => {
 
     describe('POST /api/users', () => {
         context('user validation', () => {
-            beforeEach('insert users', () => {
+            beforeEach('insert users', () =>
                 helpers.seedUsers(db, testUsers)
-            });
+            );
             const requiredFields = ['user_name', 'password'];
             requiredFields.forEach(field => {
                 const newUser = {
                     user_name: 'new user_name',
                     password: 'new password'
                 };
-                
+
                 it(`responds with 400 when ${field} is missing`, () => {
                     delete newUser[field];
 
@@ -112,7 +113,7 @@ describe.only('Users Endpoints', () => {
                     });
             });
             it(`responds 400 when user_name is taken`, () => {
-                
+
                 const userUserNameTaken = {
                     user_name: testUser.user_name,
                     password: '11AAaa!!'
@@ -131,6 +132,30 @@ describe.only('Users Endpoints', () => {
                     user_name: 'test new_user',
                     password: '11AAaa!!'
                 };
+                return supertest(app)
+                    .post('/api/users')
+                    .send(newUser)
+                    .expect(201)
+                    .expect(res => {
+                        expect(res.body.user_name).to.eql(newUser.user_name);
+                        expect(res.body).to.not.have.property('password');
+                        expect(res.body).to.have.property('id');
+                        expect(res.headers.location).to.eql(`/api/users/${res.body.id}`);
+                    })
+                    .expect(res => {
+                        db
+                            .from('recipro_users')
+                            .select('*')
+                            .where({ id: res.body.id })
+                            .first()
+                            .then(row => {
+                                expect(row.user_name).to.eql(newUser.user_name);
+                                return bcrypt.compare(newUser.password, res.password);
+                            })
+                            .then(compareMatch => {
+                                expect(compareMatch).to.be.true;
+                            });
+                    });
             });
         });
     });
