@@ -5,13 +5,14 @@ const helpers = require('./test-helpers');
 describe.only('Users Endpoints', () => {
     let db;
     
-    beforeEach('make knex instance', () => {
+    before('make knex instance', () => {
         db = knex({
             client: 'pg',
             connection: process.env.TEST_DATABASE_URL
         });
         app.set('db', db);
     });
+
 
     after('disconnecting from db', () => db.destroy());
 
@@ -114,7 +115,7 @@ describe.only('Users Endpoints', () => {
                 
                 const userUserNameTaken = {
                     user_name: testUser.user_name,
-                    password: '1!AaaA!1'
+                    password: '11AAaa!!'
                 };
                 return supertest(app)
                     .post('/api/users')
@@ -122,6 +123,14 @@ describe.only('Users Endpoints', () => {
                     .expect(400, {
                         error: 'Username already taken'
                     });
+            });
+        });
+        context('happy path', () => {
+            it('responds with 201, serialize user, storing bcrypt password', () => {
+                const newUser = {
+                    user_name: 'test new_user',
+                    password: '11AAaa!!'
+                };
             });
         });
     });

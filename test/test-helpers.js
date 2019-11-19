@@ -1,3 +1,5 @@
+const bcrypte = require('bcryptjs');
+
 function cleanTables(db) {
     return db.raw('TRUNCATE recipro_users RESTART IDENTITY CASCADE');
 }
@@ -21,9 +23,13 @@ function makeUsersArray() {
 }
 
 function seedUsers(db, users) {
+    const preppedUsers = users.map(user => ({
+        ...user,
+        password: bcrypte.hashSync(user.password, 1)
+    }))
     return db
-        .insert(users)
-        .into('recipro_users');
+        .into('recipro_users')
+        .insert(preppedUsers);
 }
 
 module.exports = {
