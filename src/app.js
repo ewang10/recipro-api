@@ -7,6 +7,7 @@ const {NODE_ENV} = require('./config');
 const usersRouter = require('./users/users-router');
 const authRouter = require('./auth/auth-router');
 const fridgeCategoriesRouter = require('./fridge_categories/fridge_categories-router');
+const fridgeItemsRouter = require('./fridge_items/fridge_items-router');
 const app = express();
 
 const morganOption = (NODE_ENV === 'production')
@@ -20,6 +21,7 @@ app.use(cors());
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/fridge-categories', fridgeCategoriesRouter);
+app.use('/api/fridge-items', fridgeItemsRouter);
 
 app.use(function errorHandler(error, req, res, next) {
     let response;

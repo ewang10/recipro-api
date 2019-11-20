@@ -75,7 +75,7 @@ describe.only('Fridge Categories Endpoints', () => {
                     .get(`/api/fridge-categories/${categoryId}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(404, {
-                        error: {message: `Category doesn't exist`}
+                        error: { message: `Category doesn't exist` }
                     });
             });
         });
@@ -89,9 +89,85 @@ describe.only('Fridge Categories Endpoints', () => {
                 return supertest(app)
                     .get(`/api/fridge-categories/${categoryId}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
-                    .expect(200, 
+                    .expect(200,
                         helpers.makeExpectedFridgeCategory(testUser, testCategories, categoryId));
             });
         });
+        context('Given a XSS attack category', () => {
+            const { maliciousCategory, expectedCategory } = helpers.makeMaliciousCategory();
+            beforeEach('insert malicious category', () =>
+                helpers.seedFridgeCategories(db, maliciousCategory)
+            );
+            it('removes XSS content', () => {
+                return supertest(app)
+                    .get(`/api/fridge-categories/${maliciousCategory.id}`)
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .expect(200)
+                    .expect(res => {
+                        expect(res.body.name).to.eql(expectedCategory.name);
+                    });
+            });
+        });
     });
+
+    describe('POST /api/fridge-categories', () => {
+        it('creates a new category, responds with 201 and new category', () => {
+            const newCategory = {
+                name: 'new category',
+                userid: 1
+            };
+            return supertest(app)
+                .post('/api/fridge-categories')
+                .send(newCategory)
+                .set('Authorization', helpers.makeAuthHeader(testUser))
+                .expect(201)
+                .expect(res => {
+                    expect(res.body.name).to.eql(newCategory.name);
+                    expect(res.body).to.have.property('id');
+                    expect(res.body.userid).to.eql(newCategory.userid);
+                    expect(res.header.location).to.eql(`/api/fridge-categories/${res.body.id}`);
+                })
+                .then(res =>
+                    supertest(app)
+                        .get(`/api/fridge-categories/${res.body.id}`)
+                        .set('Authorization', helpers.makeAuthHeader(testUser))
+                        .expect(res.body)
+                );
+        });
+
+        const requiredFields = ['name', 'userid'];
+        requiredFields.forEach(field => {
+            const newAttemptedCategory = {
+                name: 'test new name',
+                userid: 1
+            }
+
+            it(`responds with 400 when '${field}' is missing`, () => {
+                delete newAttemptedCategory[field];
+
+                return supertest(app)
+                    .post('/api/fridge-categories')
+                    .send(newAttemptedCategory)
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .expect(400, {
+                        error: { message: `Missing '${field}' in request body` }
+                    });
+            });
+        });
+        it('removes XSS attack content', () => {
+            const { maliciousCategory, expectedCategory } = helpers.makeMaliciousCategory();
+            it('removes XSS content', () => {
+                return supertest(app)
+                    .post('/api/fridge-categories')
+                    .send(maliciousCategory)
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .expect(200)
+                    .expect(res => {
+                        expect(res.body.name).to.eql(expectedCategory.name);
+                    });
+            });
+        });
+    });
+
+    
 });
