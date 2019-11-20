@@ -150,7 +150,7 @@ describe('Users Endpoints', () => {
                             .first()
                             .then(row => {
                                 expect(row.user_name).to.eql(newUser.user_name);
-                                return bcrypt.compare(newUser.password, res.password);
+                                return bcrypt.compare(newUser.password, row.password);
                             })
                             .then(compareMatch => {
                                 expect(compareMatch).to.be.true;
