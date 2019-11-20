@@ -11,7 +11,7 @@ fridgeItemsRouter
     .all(requireAuth)
     .get((req, res, next) => {
         //console.log('user idddddddddd ', req.user.id)
-        FridgeItemsService.getAllItems(req.app.get('db'), req.user.id)
+        FridgeItemsService.getAllItemsForUser(req.app.get('db'), req.user.id)
             .then(items => {
                 res.json(items.map(FridgeItemsService.serializeItems))
             })

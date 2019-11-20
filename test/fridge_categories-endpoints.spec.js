@@ -2,7 +2,7 @@ const knex = require('knex');
 const app = require('../src/app');
 const helpers = require('./test-helpers');
 
-describe.only('Fridge Categories Endpoints', () => {
+describe('Fridge Categories Endpoints', () => {
     let db;
 
     testCategories = helpers.makeFridgeCategoriesArray();

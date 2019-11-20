@@ -12,11 +12,11 @@ const FridgeItemsService = {
             userid: item.userid
         }
     },
-    getAllItems(db, id) {
+    getAllItemsForUser(db, userId) {
         return db('recipro_fridge_items AS items')
             .select('items.id', 'items.name', 'items.modified', 'items.expiration', 'items.note', 'items.categoryid', 'items.userid')
             .join('recipro_users AS users', 'users.id', 'items.userid')
-            .where('users.id', id)    
+            .where('users.id', userId)    
     }
 }
 

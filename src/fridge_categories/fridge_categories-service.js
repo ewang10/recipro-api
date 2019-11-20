@@ -8,7 +8,7 @@ const FridgeCategoriesService = {
             .where('users.id', userId);
     },
     getById(db, categoryId, userId) {
-        return FridgeCategoriesService.getAllCategories(db, userId)
+        return FridgeCategoriesService.getAllCategoriesForUser(db, userId)
             .where('categories.id', categoryId)
             .first();
     },
