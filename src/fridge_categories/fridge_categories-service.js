@@ -1,15 +1,15 @@
 const xss = require('xss');
 
 const FridgeCategoriesService = {
-    getAllCategories(db, id) {
+    getAllCategoriesForUser(db, userId) {
         return db('recipro_fridge_categories AS categories')
             .select('categories.id', 'categories.name', 'categories.userid')
             .join('recipro_users AS users', 'users.id', 'categories.userid')
-            .where('users.id', id);
+            .where('users.id', userId);
     },
-    getById(db, id) {
-        return FridgeCategoriesService.getAllCategories(db)
-            .where('categories.id', id)
+    getById(db, categoryId, userId) {
+        return FridgeCategoriesService.getAllCategories(db, userId)
+            .where('categories.id', categoryId)
             .first();
     },
     insertCategory(db, category) {
