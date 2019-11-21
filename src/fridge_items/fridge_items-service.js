@@ -29,6 +29,11 @@ const FridgeItemsService = {
             .into('recipro_fridge_items')
             .returning('*')
             .then(([item]) => item);
+    },
+    deleteItemForUser(db, itemId, userId) {
+        return FridgeItemsService.getAllItemsForUser(db, userId)
+            .where('items.id', itemId)
+            .delete();
     }
 }
 

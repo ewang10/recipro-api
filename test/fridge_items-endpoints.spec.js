@@ -56,11 +56,11 @@ describe.only('Fridge Items Endpoints', () => {
             });
         });
         context('Given a XSS attack item', () => {
-            const {maliciousItem, expectedItem} = helpers.makeMaliciousItem();
+            const { maliciousItem, expectedItem } = helpers.makeMaliciousItem();
             beforeEach('insert categories', () =>
                 helpers.seedFridgeCategories(db, testCategories)
             );
-            beforeEach('inserting malicious item', () => 
+            beforeEach('inserting malicious item', () =>
                 helpers.seedFridgeItems(db, maliciousItem)
             );
             it('removes xss content', () => {
@@ -84,7 +84,7 @@ describe.only('Fridge Items Endpoints', () => {
                     .get(`/api/fridge-items/${itemId}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(404, {
-                        error: {message: `Item doesn't exist`}
+                        error: { message: `Item doesn't exist` }
                     });
             });
         });
@@ -106,11 +106,11 @@ describe.only('Fridge Items Endpoints', () => {
         });
 
         context('Given a XSS attack item', () => {
-            const {maliciousItem, expectedItem} = helpers.makeMaliciousItem();
+            const { maliciousItem, expectedItem } = helpers.makeMaliciousItem();
             beforeEach('insert categories', () =>
                 helpers.seedFridgeCategories(db, testCategories)
             );
-            beforeEach('inserting malicious item', () => 
+            beforeEach('inserting malicious item', () =>
                 helpers.seedFridgeItems(db, maliciousItem)
             );
             it('removes xss content', () => {
@@ -127,6 +127,9 @@ describe.only('Fridge Items Endpoints', () => {
     });
 
     describe('POST /api/fridge-items', () => {
+        beforeEach('insert categories', () =>
+            helpers.seedFridgeCategories(db, testCategories)
+        );
         const requiredFields = ['name', 'expiration', 'categoryid'];
         requiredFields.forEach(field => {
             const newItem = {
@@ -144,15 +147,13 @@ describe.only('Fridge Items Endpoints', () => {
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .send(newItem)
                     .expect(400, {
-                        error: {message: `Missing '${field}' in request body`}
+                        error: { message: `Missing '${field}' in request body` }
                     });
             });
         });
 
         it('responds with 201 and newly created item', () => {
-            beforeEach('insert categories', () =>
-                helpers.seedFridgeCategories(db, testCategories)
-            );
+
             const newItem = {
                 name: 'test new name',
                 modified: new Date(),
@@ -172,15 +173,71 @@ describe.only('Fridge Items Endpoints', () => {
                     expect(res.body.note).to.eql(newItem.note);
                     expect(res.body.categoryid).to.eql(newItem.categoryid);
                     expect(res.headers.location).to.eql(`/api/fridge-items/${res.body.id}`);
-                    const expectedDate = new Intl.DateTimeFormat('en-US').format(new Date()) ;
+                    const expectedDate = new Intl.DateTimeFormat('en-US').format(new Date());
                     const actualDate = new Intl.DateTimeFormat('en-US').format(new Date(res.body.modified));
                     expect(expectedDate).to.eql(actualDate);
                 })
-                .then(res => 
+                .then(res =>
                     supertest(app)
                         .get(`/api/fridge-items/${res.body.id}`)
                         .expect(res.body)
                 );
+        });
+
+        it('removes XSS attack content from response', () => {
+            const { maliciousItem, expectedItem } = helpers.makeMaliciousItem();
+            return supertest(app)
+                .post('/api/fridge-items')
+                .set('Authorization', helpers.makeAuthHeader(testUser))
+                .send(maliciousItem)
+                .expect(201)
+                .expect(res => {
+                    expect(res.body.name).to.eql(expectedItem.name);
+                    expect(res.body.note).to.eql(expectedItem.note);
+                });
+        });
+    });
+
+    describe('DELETE /api/fridge-items/:item_id', () => {
+        context('Given no items', () => {
+            beforeEach('insert categories', () =>
+                helpers.seedFridgeCategories(db, testCategories)
+            );
+            it('responds with 404', () => {
+                const idToDelete = 1234;
+                return supertest(app)
+                    .delete(`/api/fridge-items/${idToDelete}`)
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .expect(404, {
+                        error: {message: `Item doesn't exist`}
+                    });
+            });
+        });
+
+        context('Given there are items in db', () => {
+            beforeEach('insert categories', () =>
+                helpers.seedFridgeCategories(db, testCategories)
+            );
+            beforeEach('insert items', () =>
+                helpers.seedFridgeItems(db, testItems)
+            );
+            it('responds with 204 and removes the item', () => {
+                const idToDelete = 2;
+                const expectedItems = helpers.makeExpectedFridgeItemsAfterDelete(
+                    testUser,
+                    testItems,
+                    idToDelete
+                );
+                return supertest(app)
+                    .delete(`/api/fridge-items/${idToDelete}`)
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .expect(204)
+                    .then(res => 
+                        supertest(app)
+                            .get(`/api/fridge-items/${idToDelete}`)
+                            .expect(expectedItems)
+                    );
+            });
         });
     });
 });

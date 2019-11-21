@@ -29,6 +29,7 @@ fridgeItemsRouter
         }
 
         newItem.modified = modified;
+        newItem.note = note;
         newItem.userid = req.user.id;
 
         FridgeItemsService.insertItem(
@@ -50,6 +51,17 @@ fridgeItemsRouter
     .all(checkItemExist)
     .get((req, res, next) => {
         res.json(FridgeItemsService.serializeItems(res.item));
+    })
+    .delete((req, res, next) => {
+        FridgeItemsService.deleteItemForUser(
+            req.app.get('db'),
+            req.params.item_id,
+            req.user.id
+        )
+            .then(() => {
+                res.status(204).end();
+            })
+            .catch(next);
     })
 
 async function checkItemExist(req, res, next) {

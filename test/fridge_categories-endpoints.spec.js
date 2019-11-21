@@ -161,7 +161,7 @@ describe('Fridge Categories Endpoints', () => {
                     .post('/api/fridge-categories')
                     .send(maliciousCategory)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
-                    .expect(200)
+                    .expect(201)
                     .expect(res => {
                         expect(res.body.name).to.eql(expectedCategory.name);
                     });

@@ -141,6 +141,12 @@ function makeExpectedFridgeItem(user, items, itemId) {
     return item;
 }
 
+function makeExpectedFridgeItemsAfterDelete(user, items, itemId) {
+    const userItems = makeExpectedFridgeItems(user, items);
+    const afterDelete = userItems.filter(item => item.id !== itemId)
+    return afterDelete;
+}
+
 function seedUsers(db, users) {
     const preppedUsers = users.map(user => ({
         ...user,
@@ -190,4 +196,5 @@ module.exports = {
     makeExpectedFridgeItems,
     makeMaliciousItem,
     makeExpectedFridgeItem,
+    makeExpectedFridgeItemsAfterDelete,
 }
