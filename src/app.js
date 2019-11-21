@@ -8,6 +8,9 @@ const usersRouter = require('./users/users-router');
 const authRouter = require('./auth/auth-router');
 const fridgeCategoriesRouter = require('./fridge_categories/fridge_categories-router');
 const fridgeItemsRouter = require('./fridge_items/fridge_items-router');
+const pantryCategoriesRouter = require('./pantry_categories/pantry_categories-router');
+const pantryItemsRouter = require('./pantry_items/pantry_items-router');
+const groceriesRouter = require('./groceries/groceries-router');
 const app = express();
 
 const morganOption = (NODE_ENV === 'production')
@@ -22,6 +25,9 @@ app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/fridge-categories', fridgeCategoriesRouter);
 app.use('/api/fridge-items', fridgeItemsRouter);
+app.use('/api/pantry-categories', pantryCategoriesRouter);
+app.use('/api/pantry-items', pantryItemsRouter);
+app.use('/api/groceries', groceriesRouter);
 
 app.use(function errorHandler(error, req, res, next) {
     let response;

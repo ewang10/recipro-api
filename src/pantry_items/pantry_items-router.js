@@ -1,29 +1,29 @@
 const express = require('express');
 const path = require('path')
-const FridgeItemsService = require('./fridge_items-service');
+const PantryItemsService = require('./pantry_items-service');
 const { requireAuth } = require('../middleware/jwt-auth');
 
-const fridgeItemsRouter = express.Router();
+const pantryItemsRouter = express.Router();
 const jsonParser = express.json();
 
-fridgeItemsRouter
+pantryItemsRouter
     .route('/')
     .all(requireAuth)
     .get((req, res, next) => {
-        FridgeItemsService.getAllItemsForUser(req.app.get('db'), req.user.id)
+        PantryItemsService.getAllItemsForUser(req.app.get('db'), req.user.id)
             .then(items => {
-                res.json(items.map(FridgeItemsService.serializeItems))
+                res.json(items.map(PantryItemsService.serializeItems))
             })
             .catch(next);
     })
     .post(jsonParser, (req, res, next) => {
-        const {name, modified, expiration, note, categoryid} = req.body;
-        const newItem = {name, expiration, categoryid};
-        
+        const { name, modified, expiration, note, categoryid } = req.body;
+        const newItem = { name, expiration, categoryid };
+
         for (const [key, value] of Object.entries(newItem)) {
             if (value == null) {
                 return res.status(400).json({
-                    error: { message: `Missing '${key}' in request body`}
+                    error: { message: `Missing '${key}' in request body` }
                 });
             }
         }
@@ -32,7 +32,7 @@ fridgeItemsRouter
         newItem.note = note;
         newItem.userid = req.user.id;
 
-        FridgeItemsService.insertItem(
+        PantryItemsService.insertItem(
             req.app.get('db'),
             newItem
         )
@@ -40,20 +40,20 @@ fridgeItemsRouter
                 res
                     .status(201)
                     .location(path.posix.join(req.originalUrl, `/${item.id}`))
-                    .json(FridgeItemsService.serializeItems(item));
+                    .json(PantryItemsService.serializeItems(item));
             })
             .catch(next);
     })
 
-fridgeItemsRouter
+pantryItemsRouter
     .route('/:item_id')
     .all(requireAuth)
     .all(checkItemExist)
     .get((req, res, next) => {
-        res.json(FridgeItemsService.serializeItems(res.item));
+        res.json(PantryItemsService.serializeItems(res.item));
     })
     .delete((req, res, next) => {
-        FridgeItemsService.deleteItemForUser(
+        PantryItemsService.deleteItemForUser(
             req.app.get('db'),
             req.params.item_id
         )
@@ -63,18 +63,18 @@ fridgeItemsRouter
             .catch(next);
     })
     .patch(jsonParser, (req, res, next) => {
-        const {name, expiration, note, categoryid} = req.body;
-        const itemToUpdate = {name, expiration, note, categoryid};
+        const { name, expiration, note, categoryid } = req.body;
+        const itemToUpdate = { name, expiration, note, categoryid };
 
         const numberOfValues = Object.values(itemToUpdate).filter(Boolean).length;
 
         if (numberOfValues === 0) {
             return res.status(400).json({
-                error: {message: `Request body must contain either 'name', 'expiration', 'note', or 'categoryid'`}
+                error: { message: `Request body must contain either 'name', 'expiration', 'note', or 'categoryid'` }
             });
         }
 
-        FridgeItemsService.updateItemForUser(
+        PantryItemsService.updateItemForUser(
             req.app.get('db'),
             req.params.item_id,
             itemToUpdate
@@ -87,7 +87,7 @@ fridgeItemsRouter
 
 async function checkItemExist(req, res, next) {
     try {
-        const item = await FridgeItemsService.getById(
+        const item = await PantryItemsService.getById(
             req.app.get('db'),
             req.params.item_id,
             req.user.id
@@ -105,5 +105,4 @@ async function checkItemExist(req, res, next) {
     }
 }
 
-module.exports = fridgeItemsRouter;
-
+module.exports = pantryItemsRouter;

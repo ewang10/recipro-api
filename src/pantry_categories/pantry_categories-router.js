@@ -1,41 +1,41 @@
 const express = require('express');
 const path = require('path');
-const FridgeCategoriesService = require('./fridge_categories-service');
+const PantryCategoriesService = require('./pantry_categories-service');
 const { requireAuth } = require('../middleware/jwt-auth');
 
-const fridgeCategoriesRouter = express.Router();
+const pantryCategoriesRouter = express.Router();
 const jsonParser = express.json();
 
-fridgeCategoriesRouter
+pantryCategoriesRouter
     .route('/')
     .all(requireAuth)
     .get((req, res, next) => {
-        FridgeCategoriesService.getAllCategoriesForUser(
+        PantryCategoriesService.getAllCategoriesForUser(
             req.app.get('db'),
             req.user.id
         )
             .then(categories => {
                 res.json(categories.map(
-                    FridgeCategoriesService.serializeFridgeCategories
+                    PantryCategoriesService.serializePantryCategories
                 ))
             })
             .catch(next);
     })
     .post(jsonParser, (req, res, next) => {
-        const {name} = req.body;
-        const newCategory = {name};
+        const { name } = req.body;
+        const newCategory = { name };
 
         for (const [key, value] of Object.entries(newCategory)) {
             if (value == null) {
                 return res.status(400).json({
-                    error: {message: `Missing '${key}' in request body`}
+                    error: { message: `Missing '${key}' in request body` }
                 });
             }
         }
 
         newCategory.userid = req.user.id;
 
-        FridgeCategoriesService.insertCategory(
+        PantryCategoriesService.insertCategory(
             req.app.get('db'),
             newCategory
         )
@@ -43,22 +43,22 @@ fridgeCategoriesRouter
                 res
                     .status(201)
                     .location(path.posix.join(req.originalUrl, `/${category.id}`))
-                    .json(FridgeCategoriesService.serializeFridgeCategories(category))
+                    .json(PantryCategoriesService.serializePantryCategories(category))
             })
             .catch(next);
     });
 
-fridgeCategoriesRouter
+pantryCategoriesRouter
     .route('/:category_id')
     .all(requireAuth)
     .all(checkCategoryExist)
     .get((req, res, next) => {
-        res.json(FridgeCategoriesService.serializeFridgeCategories(res.category));
+        res.json(PantryCategoriesService.serializePantryCategories(res.category));
     })
 
 async function checkCategoryExist(req, res, next) {
     try {
-        const category = await FridgeCategoriesService.getById(
+        const category = await PantryCategoriesService.getById(
             req.app.get('db'),
             req.params.category_id,
             req.user.id
@@ -76,4 +76,4 @@ async function checkCategoryExist(req, res, next) {
     }
 }
 
-    module.exports = fridgeCategoriesRouter;
+module.exports = pantryCategoriesRouter;

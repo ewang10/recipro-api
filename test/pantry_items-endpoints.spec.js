@@ -2,12 +2,12 @@ const knex = require('knex');
 const app = require('../src/app');
 const helpers = require('./test-helpers');
 
-describe('Fridge Items Endpoints', () => {
+describe('Pantry Items Endpoints', () => {
     let db;
 
-    testItems = helpers.makeFridgeItemsArray();
+    testItems = helpers.makePantryItemsArray();
     testItem = testItems[0];
-    testCategories = helpers.makeFridgeCategoriesArray();
+    testCategories = helpers.makePantryCategoriesArray();
     testCategory = testCategories[0];
     testUsers = helpers.makeUsersArray();
     testUser = testUsers[0];
@@ -32,25 +32,25 @@ describe('Fridge Items Endpoints', () => {
 
 
 
-    describe('GET /api/fridge-items', () => {
+    describe('GET /api/pantry-items', () => {
         context('Given no items', () => {
             it('responds with 200 and empty list', () => {
                 return supertest(app)
-                    .get('/api/fridge-items')
+                    .get('/api/pantry-items')
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(200, []);
             });
         });
         context('Given there are items in db', () => {
             beforeEach('insert categories', () =>
-                helpers.seedFridgeCategories(db, testCategories)
+                helpers.seedPantryCategories(db, testCategories)
             );
             beforeEach('insert items', () =>
-                helpers.seedFridgeItems(db, testItems)
+                helpers.seedPantryItems(db, testItems)
             );
             it('responds with 200 and all items for the user', () => {
                 return supertest(app)
-                    .get('/api/fridge-items')
+                    .get('/api/pantry-items')
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(200, helpers.makeExpectedItems(testUser, testItems));
             });
@@ -58,14 +58,14 @@ describe('Fridge Items Endpoints', () => {
         context('Given a XSS attack item', () => {
             const { maliciousItem, expectedItem } = helpers.makeMaliciousItem();
             beforeEach('insert categories', () =>
-                helpers.seedFridgeCategories(db, testCategories)
+                helpers.seedPantryCategories(db, testCategories)
             );
             beforeEach('inserting malicious item', () =>
-                helpers.seedFridgeItems(db, maliciousItem)
+                helpers.seedPantryItems(db, maliciousItem)
             );
             it('removes xss content', () => {
                 return supertest(app)
-                    .get('/api/fridge-items')
+                    .get('/api/pantry-items')
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(200)
                     .expect(res => {
@@ -76,12 +76,12 @@ describe('Fridge Items Endpoints', () => {
         });
     });
 
-    describe('GET /api/fridge-items/:item_id', () => {
+    describe('GET /api/pantry-items/:item_id', () => {
         context('Given no items', () => {
             it('responds with 404', () => {
                 const itemId = 1234;
                 return supertest(app)
-                    .get(`/api/fridge-items/${itemId}`)
+                    .get(`/api/pantry-items/${itemId}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(404, {
                         error: { message: `Item doesn't exist` }
@@ -91,15 +91,15 @@ describe('Fridge Items Endpoints', () => {
 
         context('Given there are items in db', () => {
             beforeEach('insert categories', () =>
-                helpers.seedFridgeCategories(db, testCategories)
+                helpers.seedPantryCategories(db, testCategories)
             );
             beforeEach('insert items', () =>
-                helpers.seedFridgeItems(db, testItems)
+                helpers.seedPantryItems(db, testItems)
             );
             it('responds with 200 and specified item', () => {
                 const itemId = 2;
                 return supertest(app)
-                    .get(`/api/fridge-items/${itemId}`)
+                    .get(`/api/pantry-items/${itemId}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(200, helpers.makeExpectedItem(testUser, testItems, itemId));
             });
@@ -108,14 +108,14 @@ describe('Fridge Items Endpoints', () => {
         context('Given a XSS attack item', () => {
             const { maliciousItem, expectedItem } = helpers.makeMaliciousItem();
             beforeEach('insert categories', () =>
-                helpers.seedFridgeCategories(db, testCategories)
+                helpers.seedPantryCategories(db, testCategories)
             );
             beforeEach('inserting malicious item', () =>
-                helpers.seedFridgeItems(db, maliciousItem)
+                helpers.seedPantryItems(db, maliciousItem)
             );
             it('removes xss content', () => {
                 return supertest(app)
-                    .get(`/api/fridge-items/${maliciousItem.id}`)
+                    .get(`/api/pantry-items/${maliciousItem.id}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(200)
                     .expect(res => {
@@ -126,9 +126,9 @@ describe('Fridge Items Endpoints', () => {
         });
     });
 
-    describe('POST /api/fridge-items', () => {
+    describe('POST /api/pantry-items', () => {
         beforeEach('insert categories', () =>
-            helpers.seedFridgeCategories(db, testCategories)
+            helpers.seedPantryCategories(db, testCategories)
         );
         const requiredFields = ['name', 'expiration', 'categoryid'];
         requiredFields.forEach(field => {
@@ -143,7 +143,7 @@ describe('Fridge Items Endpoints', () => {
             it(`responds with 400 when '${field}' is missing`, () => {
                 delete newItem[field];
                 return supertest(app)
-                    .post('/api/fridge-items')
+                    .post('/api/pantry-items')
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .send(newItem)
                     .expect(400, {
@@ -162,7 +162,7 @@ describe('Fridge Items Endpoints', () => {
                 categoryid: 1
             };
             return supertest(app)
-                .post('/api/fridge-items')
+                .post('/api/pantry-items')
                 .set('Authorization', helpers.makeAuthHeader(testUser))
                 .send(newItem)
                 .expect(201)
@@ -172,14 +172,14 @@ describe('Fridge Items Endpoints', () => {
                     expect(res.body.expiration).to.eql(newItem.expiration);
                     expect(res.body.note).to.eql(newItem.note);
                     expect(res.body.categoryid).to.eql(newItem.categoryid);
-                    expect(res.headers.location).to.eql(`/api/fridge-items/${res.body.id}`);
+                    expect(res.headers.location).to.eql(`/api/pantry-items/${res.body.id}`);
                     const expectedDate = new Intl.DateTimeFormat('en-US').format(new Date());
                     const actualDate = new Intl.DateTimeFormat('en-US').format(new Date(res.body.modified));
                     expect(expectedDate).to.eql(actualDate);
                 })
                 .then(res =>
                     supertest(app)
-                        .get(`/api/fridge-items/${res.body.id}`)
+                        .get(`/api/pantry-items/${res.body.id}`)
                         .set('Authorization', helpers.makeAuthHeader(testUser))
                         .expect(res.body)
                 );
@@ -188,7 +188,7 @@ describe('Fridge Items Endpoints', () => {
         it('removes XSS attack content from response', () => {
             const { maliciousItem, expectedItem } = helpers.makeMaliciousItem();
             return supertest(app)
-                .post('/api/fridge-items')
+                .post('/api/pantry-items')
                 .set('Authorization', helpers.makeAuthHeader(testUser))
                 .send(maliciousItem)
                 .expect(201)
@@ -199,15 +199,15 @@ describe('Fridge Items Endpoints', () => {
         });
     });
 
-    describe('DELETE /api/fridge-items/:item_id', () => {
+    describe('DELETE /api/pantry-items/:item_id', () => {
         context('Given no items', () => {
             beforeEach('insert categories', () =>
-                helpers.seedFridgeCategories(db, testCategories)
+                helpers.seedPantryCategories(db, testCategories)
             );
             it('responds with 404', () => {
                 const idToDelete = 1234;
                 return supertest(app)
-                    .delete(`/api/fridge-items/${idToDelete}`)
+                    .delete(`/api/pantry-items/${idToDelete}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(404, {
                         error: { message: `Item doesn't exist` }
@@ -217,10 +217,10 @@ describe('Fridge Items Endpoints', () => {
 
         context('Given there are items in db', () => {
             beforeEach('insert categories', () =>
-                helpers.seedFridgeCategories(db, testCategories)
+                helpers.seedPantryCategories(db, testCategories)
             );
             beforeEach('insert items', () =>
-                helpers.seedFridgeItems(db, testItems)
+                helpers.seedPantryItems(db, testItems)
             );
             it('responds with 204 and removes the item', () => {
                 const idToDelete = 2;
@@ -230,12 +230,12 @@ describe('Fridge Items Endpoints', () => {
                     idToDelete
                 );
                 return supertest(app)
-                    .delete(`/api/fridge-items/${idToDelete}`)
+                    .delete(`/api/pantry-items/${idToDelete}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(204)
                     .then(() =>
                         supertest(app)
-                            .get(`/api/fridge-items`)
+                            .get(`/api/pantry-items`)
                             .set('Authorization', helpers.makeAuthHeader(testUser))
                             .expect(expectedItems)
                     );
@@ -243,15 +243,15 @@ describe('Fridge Items Endpoints', () => {
         });
     });
 
-    describe('PATCH /api/fridge-items/:item_id', () => {
+    describe('PATCH /api/pantry-itemss/:item_id', () => {
         context('Given no items', () => {
             beforeEach('insert categories', () =>
-                helpers.seedFridgeCategories(db, testCategories)
+                helpers.seedPantryCategories(db, testCategories)
             );
             it('responds with 404', () => {
                 const idToUpdate = 1234;
                 return supertest(app)
-                    .patch(`/api/fridge-items/${idToUpdate}`)
+                    .patch(`/api/pantry-items/${idToUpdate}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .expect(404, {
                         error: { message: `Item doesn't exist` }
@@ -260,16 +260,16 @@ describe('Fridge Items Endpoints', () => {
         });
         context('Given there are items in db', () => {
             beforeEach('insert categories', () =>
-                helpers.seedFridgeCategories(db, testCategories)
+                helpers.seedPantryCategories(db, testCategories)
             );
             beforeEach('insert items', () =>
-                helpers.seedFridgeItems(db, testItems)
+                helpers.seedPantryItems(db, testItems)
             );
 
             it('responds 400 when no required field supplied', () => {
                 const idToUpdate = 2;
                 return supertest(app)
-                    .patch(`/api/fridge-items/${idToUpdate}`)
+                    .patch(`/api/pantry-items/${idToUpdate}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .send({
                         irrelevantField: "irrelevant"
@@ -293,13 +293,13 @@ describe('Fridge Items Endpoints', () => {
                 };
 
                 return supertest(app)
-                    .patch(`/api/fridge-items/${idToUpdate}`)
+                    .patch(`/api/pantry-items/${idToUpdate}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .send(updatedItem)
                     .expect(204)
                     .then(() =>
                         supertest(app)
-                            .get(`/api/fridge-items/${idToUpdate}`)
+                            .get(`/api/pantry-items/${idToUpdate}`)
                             .set('Authorization', helpers.makeAuthHeader(testUser))
                             .expect(expectedItem)
                     );
@@ -317,7 +317,7 @@ describe('Fridge Items Endpoints', () => {
                 };
 
                 return supertest(app)
-                    .patch(`/api/fridge-items/${idToUpdate}`)
+                    .patch(`/api/pantry-items/${idToUpdate}`)
                     .set('Authorization', helpers.makeAuthHeader(testUser))
                     .send({
                         ...updatedItem,
@@ -326,7 +326,7 @@ describe('Fridge Items Endpoints', () => {
                     .expect(204)
                     .then(() =>
                         supertest(app)
-                            .get(`/api/fridge-items/${idToUpdate}`)
+                            .get(`/api/pantry-items/${idToUpdate}`)
                             .set('Authorization', helpers.makeAuthHeader(testUser))
                             .expect(expectedItem)
                     );
