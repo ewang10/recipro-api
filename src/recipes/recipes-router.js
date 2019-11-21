@@ -6,3 +6,6 @@ const { requireAuth } = require('../middleware/jwt-auth');
 const recipesRouter = express.Router();
 const jsonParser = express.json();
 
+
+
+module.exports = recipesRouter;

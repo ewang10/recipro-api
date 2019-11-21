@@ -50,6 +50,9 @@ groceriesRouter
     .route('/:grocery_id')
     .all(requireAuth)
     .all(checkGroceryExist)
+    .get((req, res, next) => {
+        res.json(GroceriesService.serializeGroceries(res.grocery))
+    })
     .delete((req, res, next) => {
         GroceriesService.deleteGroceryForUser(
             req.app.get('db'),
