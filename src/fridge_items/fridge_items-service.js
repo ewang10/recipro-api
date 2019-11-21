@@ -17,6 +17,18 @@ const FridgeItemsService = {
             .select('items.id', 'items.name', 'items.modified', 'items.expiration', 'items.note', 'items.categoryid', 'items.userid')
             .join('recipro_users AS users', 'users.id', 'items.userid')
             .where('users.id', userId)    
+    },
+    getById(db, itemId, userId) {
+        return FridgeItemsService.getAllItemsForUser(db, userId)
+            .where('items.id', itemId)
+            .first();
+    },
+    insertItem(db, newItem) {
+        return db
+            .insert(newItem)
+            .into('recipro_fridge_items')
+            .returning('*')
+            .then(([item]) => item);
     }
 }
 

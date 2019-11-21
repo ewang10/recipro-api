@@ -17,7 +17,7 @@ const FridgeCategoriesService = {
             .insert(category)
             .into('recipro_fridge_categories')
             .returning('*')
-            .then(([user]) => user);
+            .then(([category]) => category);
     },
     serializeFridgeCategories(category) {
         return {

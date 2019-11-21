@@ -98,6 +98,26 @@ function makeMaliciousCategory() {
     return {maliciousCategory, expectedCategory};
 }
 
+function makeMaliciousItem() {
+    const maliciousItem = {
+        id: 911,
+        name: 'Naughty naughty very naughty <script>alert("xss");</script>',
+        modified: new Date(),
+        expiration: '2020-1-1',
+        note: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
+        categoryid: 1,
+        userid: 1
+    };
+
+    const expectedItem = {
+        ...maliciousItem,
+        name: 'Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
+        note: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`
+    };
+
+    return {maliciousItem, expectedItem};
+}
+
 function makeExpectedFridgeCategories(user, categories) {
     const userCategories = categories.filter(category => 
         category.userid === user.id);
@@ -113,6 +133,12 @@ function makeExpectedFridgeCategory(user, categories, category_id) {
 function makeExpectedFridgeItems(user, items) {
     const userItems = items.filter(item => item.userid === user.id);
     return userItems;
+}
+
+function makeExpectedFridgeItem(user, items, itemId) {
+    const userItems = makeExpectedFridgeItems(user, items);
+    const item = userItems.find(item => item.id === itemId);
+    return item;
 }
 
 function seedUsers(db, users) {
@@ -162,4 +188,6 @@ module.exports = {
     makeFridgeItemsArray,
     seedFridgeItems,
     makeExpectedFridgeItems,
+    makeMaliciousItem,
+    makeExpectedFridgeItem,
 }

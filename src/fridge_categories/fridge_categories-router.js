@@ -58,13 +58,11 @@ fridgeCategoriesRouter
 
 async function checkCategoryExist(req, res, next) {
     try {
-        //console.log('userid issss ', req.user.id)
         const category = await FridgeCategoriesService.getById(
             req.app.get('db'),
             req.params.category_id,
             req.user.id
         )
-        //console.log('category issss ', category)
         if (!category) {
             return res.status(404).json({
                 error: { message: `Category doesn't exist` }

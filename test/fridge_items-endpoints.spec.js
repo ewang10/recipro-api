@@ -55,5 +55,132 @@ describe.only('Fridge Items Endpoints', () => {
                     .expect(200, helpers.makeExpectedFridgeItems(testUser, testItems));
             });
         });
+        context('Given a XSS attack item', () => {
+            const {maliciousItem, expectedItem} = helpers.makeMaliciousItem();
+            beforeEach('insert categories', () =>
+                helpers.seedFridgeCategories(db, testCategories)
+            );
+            beforeEach('inserting malicious item', () => 
+                helpers.seedFridgeItems(db, maliciousItem)
+            );
+            it('removes xss content', () => {
+                return supertest(app)
+                    .get('/api/fridge-items')
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .expect(200)
+                    .expect(res => {
+                        expect(res.body[0].name).to.eql(expectedItem.name);
+                        expect(res.body[0].note).to.eql(expectedItem.note);
+                    });
+            });
+        });
+    });
+
+    describe('GET /api/fridge-items/:item_id', () => {
+        context('Given no items', () => {
+            it('responds with 404', () => {
+                const itemId = 1234;
+                return supertest(app)
+                    .get(`/api/fridge-items/${itemId}`)
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .expect(404, {
+                        error: {message: `Item doesn't exist`}
+                    });
+            });
+        });
+
+        context('Given there are items in db', () => {
+            beforeEach('insert categories', () =>
+                helpers.seedFridgeCategories(db, testCategories)
+            );
+            beforeEach('insert items', () =>
+                helpers.seedFridgeItems(db, testItems)
+            );
+            it('responds with 200 and specified item', () => {
+                const itemId = 2;
+                return supertest(app)
+                    .get(`/api/fridge-items/${itemId}`)
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .expect(200, helpers.makeExpectedFridgeItem(testUser, testItems, itemId));
+            });
+        });
+
+        context('Given a XSS attack item', () => {
+            const {maliciousItem, expectedItem} = helpers.makeMaliciousItem();
+            beforeEach('insert categories', () =>
+                helpers.seedFridgeCategories(db, testCategories)
+            );
+            beforeEach('inserting malicious item', () => 
+                helpers.seedFridgeItems(db, maliciousItem)
+            );
+            it('removes xss content', () => {
+                return supertest(app)
+                    .get(`/api/fridge-items/${maliciousItem.id}`)
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .expect(200)
+                    .expect(res => {
+                        expect(res.body.name).to.eql(expectedItem.name);
+                        expect(res.body.note).to.eql(expectedItem.note);
+                    });
+            });
+        });
+    });
+
+    describe('POST /api/fridge-items', () => {
+        const requiredFields = ['name', 'expiration', 'categoryid'];
+        requiredFields.forEach(field => {
+            const newItem = {
+                name: 'test new name',
+                modified: new Date(),
+                expiration: '2020-11-11',
+                note: 'test new note',
+                categoryid: 1
+            };
+
+            it(`responds with 400 when '${field}' is missing`, () => {
+                delete newItem[field];
+                return supertest(app)
+                    .post('/api/fridge-items')
+                    .set('Authorization', helpers.makeAuthHeader(testUser))
+                    .send(newItem)
+                    .expect(400, {
+                        error: {message: `Missing '${field}' in request body`}
+                    });
+            });
+        });
+
+        it('responds with 201 and newly created item', () => {
+            beforeEach('insert categories', () =>
+                helpers.seedFridgeCategories(db, testCategories)
+            );
+            const newItem = {
+                name: 'test new name',
+                modified: new Date(),
+                expiration: '2020-11-11',
+                note: 'test new note',
+                categoryid: 1
+            };
+            return supertest(app)
+                .post('/api/fridge-items')
+                .set('Authorization', helpers.makeAuthHeader(testUser))
+                .send(newItem)
+                .expect(201)
+                .expect(res => {
+                    expect(res.body).to.have.property('id');
+                    expect(res.body.name).to.eql(newItem.name);
+                    expect(res.body.expiration).to.eql(newItem.expiration);
+                    expect(res.body.note).to.eql(newItem.note);
+                    expect(res.body.categoryid).to.eql(newItem.categoryid);
+                    expect(res.headers.location).to.eql(`/api/fridge-items/${res.body.id}`);
+                    const expectedDate = new Intl.DateTimeFormat('en-US').format(new Date()) ;
+                    const actualDate = new Intl.DateTimeFormat('en-US').format(new Date(res.body.modified));
+                    expect(expectedDate).to.eql(actualDate);
+                })
+                .then(res => 
+                    supertest(app)
+                        .get(`/api/fridge-items/${res.body.id}`)
+                        .expect(res.body)
+                );
+        });
     });
 });
