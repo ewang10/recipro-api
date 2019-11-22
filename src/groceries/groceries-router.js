@@ -36,8 +36,6 @@ groceriesRouter
             newGrocery
         )
             .then(grocery => {
-                //console.log('grocery isssssssss  ', grocery)
-                //console.log('seralize grocery isssssssss ', GroceriesService.serializeGroceries(grocery))
                 res
                     .status(201)
                     .location(path.posix.join(req.originalUrl, `/${grocery.id}`))

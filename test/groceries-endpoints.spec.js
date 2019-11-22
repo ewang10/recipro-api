@@ -87,11 +87,9 @@ describe('Groceries Endpoints', () => {
                 .set('Authorization', helpers.makeAuthHeader(testUser))
                 .expect(201)
                 .expect(res => {
-                    //console.log('res body hasss  ', res.body)
                     expect(res.body.name).to.eql(newGrocery.name);
                     expect(res.body).to.have.property('id');
                     expect(res.header.location).to.eql(`/api/groceries/${res.body.id}`);
-                    //console.log('res location isss  ', res.header.location)
                 })
                 .then(res => 
                      supertest(app)

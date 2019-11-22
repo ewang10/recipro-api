@@ -262,6 +262,7 @@ function makeMaliciousRecipe() {
         name: 'Naughty naughty very naughty <script>alert("xss");</script>',
         image: 'Naughty naughty very naughty <script>alert("xss");</script>',
         url: 'Naughty naughty very naughty <script>alert("xss");</script>',
+        ingredients: ['ingredient 1', 'ingredient 2', 'ingredient 3'],
         userid: 1
     };
     const expectedRecipe = {
