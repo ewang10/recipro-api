@@ -67,7 +67,7 @@ pantryItemsRouter
         const itemToUpdate = { name, expiration, note, categoryid };
 
         const numberOfValues = Object.values(itemToUpdate).filter(Boolean).length;
-
+        console.log('numofvalues ', numberOfValues)
         if (numberOfValues === 0) {
             return res.status(400).json({
                 error: { message: `Request body must contain either 'name', 'expiration', 'note', or 'categoryid'` }
