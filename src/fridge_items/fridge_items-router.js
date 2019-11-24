@@ -63,7 +63,7 @@ fridgeItemsRouter
             .catch(next);
     })
     .patch(jsonParser, (req, res, next) => {
-        const {name, expiration, note, categoryid} = req.body;
+        const {name, expiration, note, categoryid, modified} = req.body;
         const itemToUpdate = {name, expiration, note, categoryid};
 
         const numberOfValues = Object.values(itemToUpdate).filter(Boolean).length;
@@ -73,6 +73,8 @@ fridgeItemsRouter
                 error: {message: `Request body must contain either 'name', 'expiration', 'note', or 'categoryid'`}
             });
         }
+
+        itemToUpdate.modified = modified;
 
         FridgeItemsService.updateItemForUser(
             req.app.get('db'),
