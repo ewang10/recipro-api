@@ -33,8 +33,6 @@ https://still-fjord-13060.herokuapp.com/api/users
   * **Sample Call:**
     `fetch('https://still-fjord-13060.herokuapp.com/api/users',{method:'POST', headers: {content-type: 'application/json'}, body: JSON.stringify({user_name: "username", password: "Password!0"})})`
 
-# ReciPro API
-
 * **URL**
 https://still-fjord-13060.herokuapp.com/api/auth/login
 
@@ -67,3 +65,17 @@ https://still-fjord-13060.herokuapp.com/api/auth/login
 
   * **Sample Call:**
     `fetch('https://still-fjord-13060.herokuapp.com/api/auth/login',{method:'POST', headers: {content-type: 'application/json'}, body: JSON.stringify({user_name: "username", password: "Password!0"})})`
+    
+* **URL**
+https://still-fjord-13060.herokuapp.com/api/auth/refresh
+
+  * **Method:**
+  `POST` 
+
+  * **Success Response:**
+    * **Code:** 200 <br />
+      **Content:**
+      `{ "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc" }`
+
+  * **Sample Call:**
+    `fetch('https://still-fjord-13060.herokuapp.com/api/auth/refresh',{method:'POST', headers: {content-type: 'application/json','authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}}})`
