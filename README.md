@@ -1,7 +1,7 @@
 # ReciPro API
 
 * **URL**
-https://still-fjord-13060.herokuapp.com/api/users
+https://recipro-api.onrender.com/api/users
 
   * **Method:**
   `POST` 
@@ -26,10 +26,10 @@ https://still-fjord-13060.herokuapp.com/api/users
       `{ :error": Missing 'password' in request body }`
 
   * **Sample Call:**
-    `fetch('https://still-fjord-13060.herokuapp.com/api/users',{method:'POST', headers: {content-type: 'application/json'}, body: JSON.stringify({user_name: "username", password: "Password!0"})})`
+    `fetch('https://recipro-api.onrender.com/api/users',{method:'POST', headers: {content-type: 'application/json'}, body: JSON.stringify({user_name: "username", password: "Password!0"})})`
 
 * **URL**
-https://still-fjord-13060.herokuapp.com/api/auth/login
+https://recipro-api.onrender.com/api/auth/login
 
   * **Method:**
   `POST` 
@@ -59,10 +59,10 @@ https://still-fjord-13060.herokuapp.com/api/auth/login
       `{ :error": Missing 'password' in request body }`
 
   * **Sample Call:**
-    `fetch('https://still-fjord-13060.herokuapp.com/api/auth/login',{method:'POST', headers: {content-type: 'application/json'}, body: JSON.stringify({user_name: "username", password: "Password!0"})})`
+    `fetch('https://recipro-api.onrender.com/api/auth/login',{method:'POST', headers: {content-type: 'application/json'}, body: JSON.stringify({user_name: "username", password: "Password!0"})})`
     
 * **URL**
-https://still-fjord-13060.herokuapp.com/api/auth/refresh
+https://recipro-api.onrender.com/api/auth/refresh
 
   * **Method:**
   `POST` 
@@ -73,10 +73,10 @@ https://still-fjord-13060.herokuapp.com/api/auth/refresh
       `{ "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc" }`
 
   * **Sample Call:**
-    `fetch('https://still-fjord-13060.herokuapp.com/api/auth/refresh',{method:'POST', headers: {content-type: 'application/json','authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}}})`
+    `fetch('https://recipro-api.onrender.com/api/auth/refresh',{method:'POST', headers: {content-type: 'application/json','authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}}})`
 
 * **URL**
-https://still-fjord-13060.herokuapp.com/api/fridge-categories
+https://recipro-api.onrender.com/api/fridge-categories
 
   * **Method:**
   `GET`, `POST` 
@@ -110,14 +110,14 @@ https://still-fjord-13060.herokuapp.com/api/fridge-categories
 
   * **Sample Call:**
     * POST
-    `fetch('https://still-fjord-13060.herokuapp.com/api/fridge-categories',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "category name"})})`
+    `fetch('https://recipro-api.onrender.com/api/fridge-categories',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "category name"})})`
     * GET
-    `fetch('https://still-fjord-13060.herokuapp.com/api/fridge-categories',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/fridge-categories',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * GET (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/fridge-categories/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/fridge-categories/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
 
 * **URL**
-https://still-fjord-13060.herokuapp.com/api/pantry-categories
+https://recipro-api.onrender.com/api/pantry-categories
 
   * **Method:**
   `GET`, `POST` 
@@ -151,14 +151,14 @@ https://still-fjord-13060.herokuapp.com/api/pantry-categories
 
   * **Sample Call:**
     * POST
-    `fetch('https://still-fjord-13060.herokuapp.com/api/pantry-categories',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "category name"})})`
+    `fetch('https://recipro-api.onrender.com/api/pantry-categories',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "category name"})})`
     * GET
-    `fetch('https://still-fjord-13060.herokuapp.com/api/pantry-categories',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/pantry-categories',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * GET (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/pantry-categories/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/pantry-categories/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
 
 * **URL**
-https://still-fjord-13060.herokuapp.com/api/fridge-items
+https://recipro-api.onrender.com/api/fridge-items
 
   * **Method:**
   `GET`, `POST`, `DELETE`, `PATCH`
@@ -204,18 +204,18 @@ https://still-fjord-13060.herokuapp.com/api/fridge-items
       
   * **Sample Call:**
     * POST
-    `fetch('https://still-fjord-13060.herokuapp.com/api/frige-items',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "item name", expiration: "2020-11-11", note: "", categoryid: 1})})`
+    `fetch('https://recipro-api.onrender.com/api/frige-items',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "item name", expiration: "2020-11-11", note: "", categoryid: 1})})`
     * GET
-    `fetch('https://still-fjord-13060.herokuapp.com/api/frige-items',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/frige-items',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * GET (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/frige-items/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/frige-items/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * DELETE (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/frige-items/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/frige-items/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * PATCH (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/frige-items/1',{method:'GET', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "item name", expiration: "2020-11-11", note: "", categoryid: 1})})`
+    `fetch('https://recipro-api.onrender.com/api/frige-items/1',{method:'GET', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "item name", expiration: "2020-11-11", note: "", categoryid: 1})})`
     
 * **URL**
-https://still-fjord-13060.herokuapp.com/api/pantry-items
+https://recipro-api.onrender.com/api/pantry-items
 
   * **Method:**
   `GET`, `POST`, `DELETE`, `PATCH`
@@ -261,18 +261,18 @@ https://still-fjord-13060.herokuapp.com/api/pantry-items
 
   * **Sample Call:**
     * POST
-    `fetch('https://still-fjord-13060.herokuapp.com/api/pantry-items',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "item name", expiration: "2020-11-11", note: "", categoryid: 1})})`
+    `fetch('https://recipro-api.onrender.com/api/pantry-items',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "item name", expiration: "2020-11-11", note: "", categoryid: 1})})`
     * GET
-    `fetch('https://still-fjord-13060.herokuapp.com/api/pantry-items',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/pantry-items',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * GET (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/pantry-items/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/pantry-items/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * DELETE (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/pantry-items/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/pantry-items/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * PATCH (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/pantry-items/1',{method:'GET', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "item name", expiration: "2020-11-11", note: "", categoryid: 1})})`
+    `fetch('https://recipro-api.onrender.com/api/pantry-items/1',{method:'GET', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "item name", expiration: "2020-11-11", note: "", categoryid: 1})})`
     
  * **URL**
-https://still-fjord-13060.herokuapp.com/api/groceries
+https://recipro-api.onrender.com/api/groceries
 
   * **Method:**
   `GET`, `POST` 
@@ -306,14 +306,14 @@ https://still-fjord-13060.herokuapp.com/api/groceries
 
   * **Sample Call:**
     * POST
-    `fetch('https://still-fjord-13060.herokuapp.com/api/groceries',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "category name"})})`
+    `fetch('https://recipro-api.onrender.com/api/groceries',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({name: "category name"})})`
     * GET
-    `fetch('https://still-fjord-13060.herokuapp.com/api/groceries',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/groceries',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * GET (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/groceries/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/groceries/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     
  * **URL**
-https://still-fjord-13060.herokuapp.com/api/recipes
+https://recipro-api.onrender.com/api/recipes
 
   * **Method:**
   `GET`, `POST`, `DELETE`
@@ -355,10 +355,10 @@ https://still-fjord-13060.herokuapp.com/api/recipes
 
   * **Sample Call:**
     * POST
-    `fetch('https://still-fjord-13060.herokuapp.com/api/recipes',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({"name": "Beef Stroganoff","image": "https://www.edamam.com/web-img/ba5/ba5f382509d84cc31530fdea39624072.jpg","url": "http://www.marthastewart.com/341384/beef-stroganoff","ingredients": ["1 pound beef tenderloin","Coarse salt and ground pepper","3 tablespoons canola oil","1 medium onion, thinly sliced","1 pound white mushrooms, sliced 1/2 inch thick","1 cup reduced-sodium canned beef broth","1 tablespoon dijon mustard","1/2 cup sour cream","Chopped fresh dill, for garnish"]})})`
+    `fetch('https://recipro-api.onrender.com/api/recipes',{method:'POST', headers: {content-type: 'application/json', 'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}, body: JSON.stringify({"name": "Beef Stroganoff","image": "https://www.edamam.com/web-img/ba5/ba5f382509d84cc31530fdea39624072.jpg","url": "http://www.marthastewart.com/341384/beef-stroganoff","ingredients": ["1 pound beef tenderloin","Coarse salt and ground pepper","3 tablespoons canola oil","1 medium onion, thinly sliced","1 pound white mushrooms, sliced 1/2 inch thick","1 cup reduced-sodium canned beef broth","1 tablespoon dijon mustard","1/2 cup sour cream","Chopped fresh dill, for garnish"]})})`
     * GET
-    `fetch('https://still-fjord-13060.herokuapp.com/api/recipes',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/recipes',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * GET (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/recipes/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/recipes/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
     * DELETE (:id)
-    `fetch('https://still-fjord-13060.herokuapp.com/api/recipes/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
+    `fetch('https://recipro-api.onrender.com/api/recipes/1',{method:'GET', headers: {'authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpYXQiOjE1NzUwNzMxNjIsImV4cCI6MTU3NTA5MTE2Miwic3ViIjoidXNlcm5hbWUifQ.wqsciU73_3QXWeikuioLb6nNxTvX-iQav_lKXL84PSc'}})`
